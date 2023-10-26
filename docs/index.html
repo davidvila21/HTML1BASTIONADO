@@ -1,6 +1,38 @@
 <html>
+   <style>
+        body {
+            background-color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
 
-  <a href="BIOS-UEFI/index.html"></a>
-  <a href="GRUB/index.html"></a>
+        .button-container {
+            text-align: center;
+        }
 
+        .button {
+            margin: 10px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="button-container">
+        <a href="BIOS-UEFI/index.html" class="button">BIOS/UEFI</a>
+        <a href="GRUB/index.html" class="button">GRUB</a>
+    </div>
+</body>
 </html>

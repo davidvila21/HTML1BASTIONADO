@@ -1,0 +1,25 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "https://storage.googleapis.com",
+  "mainga": "UA-49880327-14",
+  "updated": "2023-10-26T19:51:01+02:00",
+  "id": "BIOS-UEFI",
+  "duration": 0,
+  "title": "PROYECTO BASTIONADO BIOS/UEFI",
+  "summary": "PROYECTO BASTIONADO",
+  "source": "BIOS.md",
+  "theme": "",
+  "status": [
+    "published"
+  ],
+  "category": [
+    "codelab",
+    "markdown"
+  ],
+  "tags": [
+    "web"
+  ],
+  "ga": "ID",
+  "url": "BIOS-UEFI"
+}

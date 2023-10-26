@@ -1,0 +1,89 @@
+
+<!doctype html>
+
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <meta name="theme-color" content="#4F7DC9">
+  <meta charset="UTF-8">
+  <title>PROYECTO BASTIONADO GRUB</title>
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+  <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://storage.googleapis.com/claat-public/codelab-elements.css">
+  <style>
+    .success {
+      color: #1e8e3e;
+    }
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+  <google-codelab codelab-gaid="ID"
+                  id="GRUB"
+                  title="PROYECTO BASTIONADO GRUB"
+                  environment="web"
+                  feedback-link="">
+    
+      <google-codelab-step label="Introducción" duration="0">
+        <p>Uno de los gestores de arranque más utilizados en sistemas Linux a día de hoy es GRUB (GRand Unified Bootloader). Aunque GRUB es extremadamente versátil en su forma estándar, existe un gran potencial para adaptarlo y mejorarlo según las necesidades específicas de un usuario o una organización.</p>
+<p>Esta es una guía basada en crear capas de seguridad en este gestor de arranque, para que ningún actor malicioso pueda hacer uso de ellas ante nuestra ética. Es por ello que se tratarán lo siguientes puntos de seguridad: se quiere ocultar el menú de arranque, se quiere crear una contraseña de seguridad para el acceso a este, se va a explicar como crear copias de seguridad de la información de arranque del GRUB, y por último una opción de seguridad añadida.</p>
+<p>Antes de empezar, hay que comentar que el sistema en el cual se realizarán esta serie de configuraciones será en Debian 12.2.0.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="PRIMEROS PASOS" duration="0">
+        <h2 is-upgraded><strong>Ocultación de menú de aranque:</strong></h2>
+<p>Una vez iniciado Debian, queremos acceder a un archivo de configuración de GRUB, para ello abrimos la terminal (Ctrl+Alt+T) y en este sistema se nos pide usuario root para realizar todas las acciones que se mostrarán en esta guía; para ello: &#34;su -&#34;.</p>
+<p>Una vez con usuario root, vamos a hacer un &#34;nano /etc/default/grub&#34; para poder editar este archivo. Vamos a cambiar el parámetro &#34;GRUB_TIMEOUT&#34; para que sea igual a 0, y añadimos una línea llamada &#34;GRUB_TIMEOUT_STYLE=hidden&#34; para que el menú permanezca oculto.</p>
+<p class="image-container"><img alt="img/1.PNG" src="img\\f765eb080370bcb3.PNG"></p>
+<p>Guardamos archivo y pasamos a la siguiente acción de seguridad.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Configuremos una contraseña de arranque:" duration="0">
+        <p>Primeramente, para ello escribimos este comando en la terminal: &#34;grub-mkpasswd-pbkdf2&#34;, una vez hecho te preguntará que insertes una contraseña, que es la que va a ser cifrada para posteriormente utilizarla para el GRUB.</p>
+<p class="image-container"><img alt="img/3.PNG" src="img\\43bd4eae2bf729e9.PNG"></p>
+<p>Esto no significa que cada vez que queramos entrar al sistema debamos insertar todo ese trozo de código, sino que si alguien quiere acceder a algún archivo del sistema para mirar la contraseña de este, se encontrará con un nivel de seguridad de tipo cifrado al cual no tendrá acceso y solo sabrá el usuario que lo creó, es decir, solo tienes que insertar la contraseña que pusiste antes de haber sido cifrado.</p>
+<p>Una vez hecho esto, vamos a editar el archivo &#34;40_custom&#34; con el comando &#34;nano /etc/grub.d/40_custom&#34;, en el cual añadiremos las siguientes líneas:</p>
+<p>set superusers=&#34;tu_nombre_de_usuario&#34;</p>
+<p>password_pbkdf2    tu_numbre_de_usuario     contraseña_cifrada</p>
+<p class="image-container"><img alt="img/4.PNG" src="img\\1d6eecacaad175ba.PNG"></p>
+<p>De esta manera cada vez que se inicie el dispositivo y pase el GRUB, nos pida la contraseña.</p>
+<p>Guardamos y salimos del archivo.</p>
+<p>ATENCIÓN: Para que todos los cambios hechos anteriormente (Y LOS POSTERIORES) funcionen, se debe usar un comando llamada &#34;update-grub&#34;, el cual actualizará los archivos para que el GRUB los lea.</p>
+<p class="image-container"><img alt="img/6.PNG" src="img\\6eee0bd55f8cd73b.PNG"></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="MÁS PASOS" duration="0">
+        <h2 is-upgraded><strong>Copias de seguridad de GRUB</strong></h2>
+<p>En este apartado, vamos a crear copias de seguridad almacenadas a través de la línea de comandos y sin programa alguno, comprimiendo los archivos &#34;.cfg&#34; o de configuración de GRUB.</p>
+<p>Para ello utilizaremos este comando (el cual he editado a mi manera para darle el nombre que yo quiero):</p>
+<p>sudo tar zcvf grub2copia_-$(date +%d-%m-%Y).tar /etc/default/grub /etc/grub.d/ /boot/grub/grub.cfg</p>
+<p class="image-container"><img alt="img/7.PNG" src="img\\a514e7068f71ee4b.PNG"></p>
+<p>Los parámetros que he elegido harán que se menciona el día, la hora y el año en la cual se comprimió la información. Simplemente al hacer este comando ya tenemos guardado el archivo en nuestra carpeta raíz.</p>
+<h2 is-upgraded><strong>Permisos de edición y lectura de archivos de configuración.</strong></h2>
+<p>Como último paso, he establecido un nivel de seguridad a través de permisos a mis archivos de configuración; para ello nos vamos a la carpeta de &#34;/etc/grub.d/&#34;, y aquí escribiremos este comando:</p>
+<p>chmod 400 *</p>
+<p class="image-container"><img alt="img/8.PNG" src="img\\dfbeb01482e28580.PNG"></p>
+<p>¿Qué se consigue con este comando? Que ningún usuario con permisos de administrador pueda ni leer ni realizar cambios en los archivos de esta carpeta, además, están ocultos.</p>
+
+
+      </google-codelab-step>
+    
+  </google-codelab>
+
+  <script src="https://storage.googleapis.com/claat-public/native-shim.js"></script>
+  <script src="https://storage.googleapis.com/claat-public/custom-elements.min.js"></script>
+  <script src="https://storage.googleapis.com/claat-public/prettify.js"></script>
+  <script src="https://storage.googleapis.com/claat-public/codelab-elements.js"></script>
+  <script src="//support.google.com/inapp/api.js"></script>
+
+</body>
+</html>

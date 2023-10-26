@@ -1,0 +1,25 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "https://storage.googleapis.com",
+  "mainga": "UA-49880327-14",
+  "updated": "2023-10-26T19:52:34+02:00",
+  "id": "GRUB",
+  "duration": 0,
+  "title": "PROYECTO BASTIONADO GRUB",
+  "summary": "PROYECTO BASTIONADO",
+  "source": "GRUB.md",
+  "theme": "",
+  "status": [
+    "published"
+  ],
+  "category": [
+    "codelab",
+    "markdown"
+  ],
+  "tags": [
+    "web"
+  ],
+  "ga": "ID",
+  "url": "GRUB"
+}

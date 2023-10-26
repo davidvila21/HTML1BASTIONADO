@@ -1,0 +1,91 @@
+
+<!doctype html>
+
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <meta name="theme-color" content="#4F7DC9">
+  <meta charset="UTF-8">
+  <title>PROYECTO BASTIONADO BIOS/UEFI</title>
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+  <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://storage.googleapis.com/claat-public/codelab-elements.css">
+  <style>
+    .success {
+      color: #1e8e3e;
+    }
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+  <google-codelab codelab-gaid="ID"
+                  id="BIOS-UEFI"
+                  title="PROYECTO BASTIONADO BIOS/UEFI"
+                  environment="web"
+                  feedback-link="">
+    
+      <google-codelab-step label="Introducción" duration="0">
+        <p>A día de hoy, donde cada proceso computacional y transacción dependen en gran medida del funcionamiento óptimo y seguro de los sistemas informáticos, es importante abordar cada componente desde una perspectiva de seguridad. Uno de estos componentes críticos que a menudo se pasa por alto, pero que actúa como la primera línea de defensa y el núcleo del proceso de arranque de un ordenador, es el sistema básico de entrada/salida, también llamado BIOS, o en sistemas más modernos, la interfaz de firmware extensible unificada UEFI.</p>
+<p>BIOS/UEFI es el software integrado en una placa madre que se ejecuta al encender una computadora. No sólo inicia el sistema operativo y el hardware del sistema, sino que también ofrece varias opciones y configuraciones que pueden influir significativamente en la seguridad del sistema. Un BIOS/UEFI comprometido puede resultar en una amplia gama de problemas de seguridad, desde la exposición de datos confidenciales hasta el control total del sistema por parte de actores maliciosos.</p>
+<p>He realizado una serie de configuraciones de seguridad en este como guía para computadoras con placa base de ASUS, es decir, con la ASUS BIOS Utility, y he aquí los resultados:</p>
+<h2 is-upgraded><strong>Configuremos una contraseña de arranque:</strong></h2>
+<p>Una vez entramos a la BIOS (el cual en este caso se accede dejando pulsado el botón F2 al iniciar el PC), accedemos a la pestaña de &#34;Security&#34;, en la cual encontraremos una serie de parámetros como &#34;User Password&#34;, que como nos indica aparece como &#34;No instalada&#34;.</p>
+<p class="image-container"><img alt="IMAGEN1" src="img\\7b9dbb4d50b154fe.jpg"></p>
+<p>Si clicamos nos aparecerá esta ventana:</p>
+<p class="image-container"><img alt="IMAGEN2" src="img\\6132fb3799102529.jpg"></p>
+<p>Ingresamos la contraseña de arranque deseada, le damos a &#34;Ok&#34; y ya estaría más que establecida.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="PRIMEROS PASOS" duration="0">
+        <h2 is-upgraded><strong>Configuremos una contraseña de administrador:</strong></h2>
+<pre><code>En la misma sección donde está la opción de &#34;User Password&#34;, justo arriba se encuentra &#34;Administrator Password&#34;, que como indica &#34;no está instalada&#34;.
+</code></pre>
+<p class="image-container"><img alt="IMAGEN3" src="img\\78c73e04b4f34937.png"></p>
+<p>Clicamos en ella y nos saldrá la misma ventana de inserción de credenciales que en el anterior punto.</p>
+<p class="image-container"><img alt="IMAGEN4" src="img\\7cfb581f5fbd9123.png"></p>
+<p>Una vez clicamos en &#34;Ok&#34; se guardará, y veremos las dos opciones con un título de &#34;Instalado&#34;:</p>
+<p class="image-container"><img alt="IMAGEN5" src="img\\ba7a9d4d2d517809.jpg"></p>
+<h2 is-upgraded><strong>Se quiere evitar arranques de dispositivos externos (USB...)</strong></h2>
+<p>Antes de empezar, he de comentar que la ASUS BIOS Utility es menos compleja que otras BIOS, es decir que hay menos opciones, pero no quita que se puedan dar variedad de configuraciones de seguridad.</p>
+<p>En este caso, accedemos a la pestaña de Boot (Inicio), justo al lado de Security, una vez en ella, encontraremos una opción llamada &#34;Delete Boot Option&#34; la cual nos servirá para eliminar el dispositivo USB que este conectado en caso de querer eliminarlo de manera manual.</p>
+<p class="image-container"><img alt="IMAGEN6" src="img\\ef1453e9f457a3b9.jpg"></p>
+<p class="image-container"><img alt="IMAGEN7" src="img\\94dd5f4613bb739b.png"></p>
+<p>Si queremos desactivar todo tipo de arranque por USB, deberemos volver a la pestaña de &#34;Security&#34; del principio, en la cual encontraremos una opción llamada &#34;I/O Interface Security&#34;:</p>
+<p class="image-container"><img alt="IMAGEN8" src="img\\8685e40ec6b6bb99.jpg"></p>
+<p>Accedemos a ella y encontraremos una opción llamada USB Interface Security, a la cual también accederemos:</p>
+<p class="image-container"><img alt="IMAGEN9" src="img\\be086618b75779f3.jpg"></p>
+<p>Es aquí cuando desplegamos la opción de &#34;External ports&#34;, para después elegir la opción &#34;Lock&#34;, el cual tendrá el efecto de bloquear el uso de Arranques Externos a través de USB.</p>
+<p class="image-container"><img alt="IMAGEN10" src="img\\d952ad9265f205de.jpg"></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="MÁS PASOS" duration="0">
+        <h2 is-upgraded><strong>Se quiere establecer un orden de arranque seguro:</strong></h2>
+<p>En esta sección, simplemente vamos al menú principal, justo cuando se inicia la BIOS; he aquí la parte en la cual se nos mostrará la prioridad de arranque de cada dispositivo, dispuesto en forma de columna de arriba hacia abajo, en la cual se pueden mover los dispositivos de esta manera para darle más prioridad o menos:</p>
+<p class="image-container"><img alt="IMAGEN11" src="img\\15dbf3edb77f26f6.jpg"></p>
+<p>Este paso de seguridad es tan simple como esto, y no conlleva buscar más a fondo otras opciones.</p>
+<h2 is-upgraded><strong>Modo Seguro</strong></h2>
+<p>Como última opción, se puede establecer el inicio seguro, que como ya sabemos está creado para que el sistema operativo inicie sin ninguna aplicación de terceros.</p>
+<p>Esta es una de las otras opciones que se pueden llegar a utilizar en caso de querer prevenir o directamente solucionar un problema vírico o de tipo malware en el sistema, y es bastante útil ya que en la gran mayoría de casos va a servir para solucionar todos los problemas desde cero.</p>
+<p>Para ello accedemos a la pestaña de &#34;Security&#34;, y en ella vamos a la opción de &#34;Secure Boot&#34;, que nos llevará a otra pestaña para activar una opción llamada &#34;Security Boot Control&#34; a través de un desplegable, en el cual debemos dejar puesto &#34;Enabled&#34;:</p>
+<p class="image-container"><img alt="IMAGEN12" src="img\\9aaa075ad0edc894.jpg"></p>
+
+
+      </google-codelab-step>
+    
+  </google-codelab>
+
+  <script src="https://storage.googleapis.com/claat-public/native-shim.js"></script>
+  <script src="https://storage.googleapis.com/claat-public/custom-elements.min.js"></script>
+  <script src="https://storage.googleapis.com/claat-public/prettify.js"></script>
+  <script src="https://storage.googleapis.com/claat-public/codelab-elements.js"></script>
+  <script src="//support.google.com/inapp/api.js"></script>
+
+</body>
+</html>
